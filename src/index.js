@@ -4,10 +4,14 @@ const { GraphQLServer } = require('graphql-yoga');
  * Defines GraphQL schema. Simple query type with 1 field info with
  * Type String that is required
  */
-const typeDefs = `
+/* const typeDefs = `
 type Query {
     info: String!,
     feed: [Link!]!,
+}
+
+type Mutation {
+    post(url: String!, description: String!): Link!
 }
 
 type Link {
@@ -15,7 +19,7 @@ type Link {
     description: String!,
     url: String!,
 }
-`;
+`; */
 
 // storing this link at runtime
 let links = [
@@ -25,7 +29,7 @@ let links = [
     description: 'Fullstack tutorial for GraphQL',
   },
 ];
-
+let idCount = links.length;
 /**
  * The actual implementation of the GraphQL schema.
  * Structure is identical to the structure of the type def
@@ -35,6 +39,17 @@ const resolvers = {
     info: () => `This is the API of a Hackernews Clone`,
     // root field for feed
     feed: () => links,
+  },
+  Mutation: {
+    post: (parent, args) => {
+      const link = {
+        id: `link-${idCount++}`,
+        description: args.description,
+        url: args.url,
+      };
+      links.push(link);
+      return link;
+    },
   },
   Link: {
     id: (parent) => parent.id,
@@ -48,7 +63,7 @@ const resolvers = {
  * Tells server what API operations are accepted and how they should be resolved
  */
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 });
 server.start(() => console.log(`Server is running on http://localhost:4000`));
