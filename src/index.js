@@ -51,13 +51,13 @@ const resolvers = {
       return link;
     },
     updateLink: (parent, args) => {
-      const link = links.map((item) => (item.id = args.id));
+      const link = links.map((item) => item.id === args.id);
       link.url = args.url;
       link.description = args.description;
       return link;
     },
     deleteLink: (parent, args) => {
-      const link = links.map((item) => (item.id = args.id));
+      const link = links.map((item) => item.id === args.id);
       links.splice(link, 1);
       return link;
     },
