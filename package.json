@@ -1,0 +1,11 @@
+{
+  "name": "GraphQLNodeServer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/trbenne2/GraphQLNodeServer.git",
+  "author": "trbenne2",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  }
+}
