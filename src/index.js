@@ -50,11 +50,17 @@ const resolvers = {
       links.push(link);
       return link;
     },
-  },
-  Link: {
-    id: (parent) => parent.id,
-    description: (parent) => parent.description,
-    url: (parent) => parent.url,
+    updateLink: (parent, args) => {
+      const link = links.map((item) => (item.id = args.id));
+      link.url = args.url;
+      link.description = args.description;
+      return link;
+    },
+    deleteLink: (parent, args) => {
+      const link = links.map((item) => (item.id = args.id));
+      links.splice(link, 1);
+      return link;
+    },
   },
 };
 
